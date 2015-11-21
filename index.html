@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Pomodoro Timer</title>
+    <link href="css/pomodoro-timer.css" type="text/css" rel="stylesheet"/>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>-->
+    <script src="angular.js"></script>
+    <script src="pomodoro-timer.js"></script>
+  </head>
+  <body ng-app="pomodoro-timer">
+    <div id="appContainer" ng-controller="TimerController">
+      <label for="pomodoroInput">Pomodoro</label>
+      <input id="pomodoroInput" type="number" min="1" ng-model="pomodoroLength"></input>
+      <label for="shortBreakInput">Short Break</label>
+      <input id="shortBreakInput" type="number" min="1" ng-model="shortBreakLength"></input>
+      <label for="longBreakInput">Long Break</label>
+      <input id="longBreakInput" type="number" min="1" ng-model="longBreakLength"></input>
+      <button ng-click="toggleTimer()">Start</button>
+      <p ng-bind="time | date:'m:ss'"></p>
+    </div>
+  </body>
+</html>
