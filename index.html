@@ -1,7 +1,8 @@
 <html>
   <head>
     <title>Pomodoro Timer</title>
-    <link href="css/pomodoro-timer.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pomodoro-timer.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>-->
     <script src="angular.js"></script>
     <script src="pomodoro-timer.js"></script>
@@ -9,12 +10,15 @@
   <body ng-app="pomodoro-timer">
     <div id="appContainer" ng-controller="TimerController">
       <label for="pomodoroInput">Pomodoro</label>
-      <input id="pomodoroInput" type="number" min="1" ng-model="pomodoroLength"></input>
+      <input id="pomodoroInput" type="number" min="1" integer ng-model="pomodoroLength" ng-disabled="timerRunning" ng-change="validate('pomodoro')"></input>
       <label for="shortBreakInput">Short Break</label>
-      <input id="shortBreakInput" type="number" min="1" ng-model="shortBreakLength"></input>
+      <input id="shortBreakInput" type="number" min="1" integer ng-model="shortBreakLength" ng-disabled="timerRunning"></input>
       <label for="longBreakInput">Long Break</label>
-      <input id="longBreakInput" type="number" min="1" ng-model="longBreakLength"></input>
-      <button ng-click="toggleTimer()">Start</button>
+      <input id="longBreakInput" type="number" min="1" integer ng-model="longBreakLength" ng-disabled="timerRunning"></input>
+      <button id="startButton" ng-click="startTimer()"><span class="fa fa-play"></span> Start</button>
+      <button id="startButton" ng-click="stopTimer()"><span class="fa fa-pause"></span> Pause</button>
+      <button id="startButton" ng-click="stopTimer(true)"><span class="fa fa-undo"></span> Reset</button>
+      <p><span ng-bind="session"></span> <span ng-bind="pomodoroNumber" ng-hide="session=='longBreak'"></span></p>
       <p ng-bind="time | date:'m:ss'"></p>
     </div>
   </body>
