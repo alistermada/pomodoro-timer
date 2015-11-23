@@ -2,9 +2,9 @@ angular
   .module('pomodoro-timer', [])
   .controller('TimerController', ['$scope', '$interval', function($scope, $interval) {
     $scope.timerRunning = false;
-    $scope.pomodoroLength = 25;
-    $scope.shortBreakLength = 5;
-    $scope.longBreakLength = 20;
+    $scope.pomodoro = 25;
+    $scope.shortBreak = 5;
+    $scope.longBreak = 20;
     $scope.session = "pomodoro";
     $scope.pomodorosPerSet = 4;
     $scope.pomodoroNumber = 1;
@@ -15,13 +15,9 @@ angular
       }
     });
 
-    $scope.$watchGroup(['pomodoroLength', 'shortBreakLength', 'longBreakLength'], function(newValue) {
+    $scope.$watchGroup(['pomodoro', 'shortBreak', 'longBreak'], function(newValue) {
       resetTime();
     });
-
-    $scope.validate = function(input) {
-      console.log(input)
-    }
 
     $scope.startTimer = function() {
       console.log($scope.value);
@@ -60,6 +56,6 @@ angular
     }
 
     function resetTime() {
-      $scope.time = $scope[$scope.session + "Length"] * 60 * 1000;
+      $scope.time = $scope[$scope.session] * 60 * 1000;
     }
   }]);

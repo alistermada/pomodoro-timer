@@ -9,15 +9,17 @@
   </head>
   <body ng-app="pomodoro-timer">
     <div id="appContainer" ng-controller="TimerController">
-      <label for="pomodoroInput">Pomodoro</label>
-      <input id="pomodoroInput" type="number" min="1" integer ng-model="pomodoroLength" ng-disabled="timerRunning" ng-change="validate('pomodoro')"></input>
-      <label for="shortBreakInput">Short Break</label>
-      <input id="shortBreakInput" type="number" min="1" integer ng-model="shortBreakLength" ng-disabled="timerRunning"></input>
-      <label for="longBreakInput">Long Break</label>
-      <input id="longBreakInput" type="number" min="1" integer ng-model="longBreakLength" ng-disabled="timerRunning"></input>
-      <button id="startButton" ng-click="startTimer()"><span class="fa fa-play"></span> Start</button>
-      <button id="startButton" ng-click="stopTimer()"><span class="fa fa-pause"></span> Pause</button>
-      <button id="startButton" ng-click="stopTimer(true)"><span class="fa fa-undo"></span> Reset</button>
+      <form name="controls" novalidate>
+        <label>Pomodoro</label>
+        <input name="pomodoro" type="number" min="1" integer ng-model="pomodoro" ng-disabled="timerRunning" required></input>
+        <label>Short Break</label>
+        <input name="shortBreak" type="number" min="1" integer ng-model="shortBreak" ng-disabled="timerRunning" required></input>
+        <label>Long Break</label>
+        <input name="longBreak" type="number" min="1" integer ng-model="longBreak" ng-disabled="timerRunning" required></input>
+        <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
+        <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
+        <button id="startButton" ng-click="stopTimer(true)" ng-disabled="controls.$invalid"><span class="fa fa-undo"></span> Reset</button>
+      </form>
       <p><span ng-bind="session"></span> <span ng-bind="pomodoroNumber" ng-hide="session=='longBreak'"></span></p>
       <p ng-bind="time | date:'m:ss'"></p>
     </div>
