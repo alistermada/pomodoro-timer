@@ -6,6 +6,8 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>-->
     <script src="angular.js"></script>
     <script src="pomodoro-timer.js"></script>
+    <script src="services/ordinalFilter.js"></script>
+    <script src="services/titlecaseFilter.js"></script>
   </head>
   <body ng-app="pomodoro-timer">
     <div id="appContainer" ng-controller="TimerController">
@@ -16,11 +18,13 @@
         <input name="shortBreak" type="number" min="1" integer ng-model="shortBreak" ng-disabled="timerRunning" required></input>
         <label>Long Break</label>
         <input name="longBreak" type="number" min="1" integer ng-model="longBreak" ng-disabled="timerRunning" required></input>
-        <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
-        <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
-        <button id="startButton" ng-click="stopTimer(true)" ng-disabled="controls.$invalid"><span class="fa fa-undo"></span> Reset</button>
+        <div>
+          <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
+          <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
+          <button id="startButton" ng-click="stopTimer(true)" ng-disabled="controls.$invalid"><span class="fa fa-undo"></span> Reset</button>
+        </div>
       </form>
-      <p><span ng-bind="session"></span> <span ng-bind="pomodoroNumber" ng-hide="session=='longBreak'"></span></p>
+      <p><span ng-bind="pomodoroNumber | ordinal" ng-hide="session=='longBreak'"></span> <span ng-bind="session | titlecase"></span></p>
       <p ng-bind="time | date:'m:ss'"></p>
     </div>
   </body>
