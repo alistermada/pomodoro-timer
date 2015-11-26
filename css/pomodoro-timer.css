@@ -1,4 +1,83 @@
-input {
-  padding-left: 4px;
-  width: 40px;
+body {
+  background-color: #000;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 14px;
+  color: #55EE33;
+  text-align: center;
 }
+
+#appContainer {
+  background-color: #000;
+  border: 3px solid #55AA33;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px;
+}
+
+input {
+  text-align: center;
+  font-weight: inherit;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+  width: 60px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input:focus {
+  outline: #55EE33 solid 2px;
+}
+
+input::selection { 
+  background: #55EE33;
+  color: #113311;
+}
+input::-moz-selection { 
+  background: #55EE33;
+  color: #113311;
+}
+
+fieldset {
+  background-color: #113311;
+  display: inline-block;
+  width: 90px;
+  padding: 0;
+  border: 3px solid #55AA33;
+}
+
+legend {
+  font-size: 12px;
+}
+
+button {
+  background-color: #113311;
+  border: 3px solid #55AA33;
+  color: inherit;
+}
+
+button:active {
+  background-color: #55AA33;
+}
+
+button:focus {
+  outline: none;
+}
+
+svg {
+  width: 80px;
+  height: 80px;
+}
+
+#timerProgress {
+  stroke: #55EE33;
+  stroke-width: 6;
+  stroke-dasharray: 126px;
+  stroke-dashoffset: 126px;
+}
+
