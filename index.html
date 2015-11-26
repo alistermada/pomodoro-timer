@@ -12,21 +12,30 @@
   <body ng-app="pomodoro-timer">
     <div id="appContainer" ng-controller="TimerController">
       <form name="controls" novalidate>
-        <label>Pomodoro</label>
-        <input name="pomodoro" type="number" min="1" integer ng-model="pomodoro" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
-        <label>Short Break</label>
-        <input name="shortBreak" type="number" min="1" integer ng-model="shortBreak" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
-        <label>Long Break</label>
-        <input name="longBreak" type="number" min="1" integer ng-model="longBreak" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
-        <div>
-          <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
-          <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
-          <button id="startButton" ng-click="stopTimer(true)" ng-disabled="controls.$invalid"><span class="fa fa-undo"></span> Reset</button>
-        </div>
+        <fieldset>
+          <legend>Pomodoro</legend>
+          <input name="pomodoro" type="number" min="1" integer ng-model="pomodoro" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
+        </fieldset>
+        <fieldset>
+          <legend>Short Break</legend>
+          <input name="shortBreak" type="number" min="1" integer ng-model="shortBreak" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
+        </fieldset>
+        <fieldset>
+          <legend>Long Break</legend>
+          <input name="longBreak" type="number" min="1" integer ng-model="longBreak" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
+        </fieldset>
       </form>
       <p><span ng-bind="pomodoroNumber | ordinal" ng-hide="currentSession=='longBreak'"></span> <span ng-bind="currentSession | titlecase"></span></p>
       <p ng-bind="time | date:'m:ss'"></p>
-      <audio id="timerBeep" src="assets/timer-beep.mp3"></audio>
+      <svg>
+        <circle id="timerProgress" cx="40" cy="40" r="20"/>
+      </svg>
+      <div>
+        <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
+        <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
+        <button id="startButton" ng-click="stopTimer(true)" ng-disabled="controls.$invalid"><span class="fa fa-undo"></span> Reset</button>
+      </div>
     </div>
+    <audio id="timerBeep" src="assets/timer-beep.mp3"></audio>
   </body>
 </html>

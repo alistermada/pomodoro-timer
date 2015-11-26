@@ -9,6 +9,7 @@ angular
     $scope.pomodorosPerSet = 4;
     $scope.pomodoroNumber = 1;
     $scope.time = $scope[$scope.currentSession] * 60000;
+    $scope.timePercent = 0;
     var sessions = ['pomodoro', 'shortBreak', 'longBreak'];
 
     $scope.$watch('time', function() {
@@ -20,7 +21,7 @@ angular
     $scope.$watchGroup(sessions, function(newValue, oldValue) {
       for (var i = 0; i < sessions.length; i++) {
         if (newValue[i] !== oldValue[i] && sessions[i] === $scope.currentSession) {
-          updateTime();
+          resetTime();
         }
       }
     });
@@ -33,6 +34,7 @@ angular
       if (!$scope.timerRunning) {
         $scope.timer = $interval(function(){
           $scope.time -= 1000;
+          updateTimerProgress();
         }, 1000);
         $scope.timerRunning = true;
       }
@@ -44,8 +46,9 @@ angular
         $scope.timerRunning = false;
       }
       if (reset) {
-        resetTime(); 
+        resetTime();
       }
+      updateTimerProgress();
     }
 
     $scope.nextSession = function() {
@@ -76,6 +79,15 @@ angular
     function updateTime() {
       var remainingSeconds = $scope.time % 60000;
       resetTime();
-      $scope.time += remainingSeconds;
+      if (remainingSeconds > 0) {
+        $scope.time += remainingSeconds;
+      }
+    }
+
+    function updateTimerProgress() {
+      var progress =  document.getElementById('timerProgress');
+      var percent = $scope.time / ($scope[$scope.currentSession] * 60000);
+      var progressLength = Math.floor(percent * 126);
+      progress.style.strokeDashoffset = progressLength + 'px';
     }
   }]);
