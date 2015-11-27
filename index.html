@@ -25,11 +25,18 @@
           <input name="longBreak" type="number" min="1" integer ng-model="longBreak" ng-disabled="timerRunning" ng-focus="highlight($event)" required></input>
         </fieldset>
       </form>
-      <p><span ng-bind="pomodoroNumber | ordinal" ng-hide="currentSession=='longBreak'"></span> <span ng-bind="currentSession | titlecase"></span></p>
-      <p ng-bind="time | date:'m:ss'"></p>
-      <svg>
-        <circle id="timerProgress" cx="40" cy="40" r="20"/>
-      </svg>
+
+      <button ng-click="previousSession()" ng-disabled="timerRunning"><span class="fa fa-chevron-left"></span></button>
+      <p id="sessionDisplay"><span ng-bind="pomodoroNumber | ordinal" ng-hide="currentSession=='longBreak'"></span> <span ng-bind="currentSession | titlecase"></span></p>
+      <button ng-click="nextSession()" ng-disabled="timerRunning"><span class="fa fa-chevron-right"></span></button>
+      
+      <div>
+        <svg>
+          <circle id="timerProgress" cx="44" cy="44" r="40" transform="rotate(-90 44 44)"/>
+          <text id="timerDisplay" x="44" y="48" ng-bind="time | date:'m:ss'"></text>
+        </svg>
+      </div>
+
       <div>
         <button id="startButton" ng-click="startTimer()" ng-disabled="controls.$invalid"><span class="fa fa-play"></span> Start</button>
         <button id="startButton" ng-click="stopTimer()" ng-disabled="controls.$invalid"><span class="fa fa-pause"></span> Pause</button>
