@@ -1,17 +1,23 @@
 angular
   .module('pomodoro-timer', [])
-  .controller('TimerController', ['$scope', '$interval', function($scope, $interval) {
+  .controller('TimerController', ['$scope', '$interval', '$filter', function($scope, $interval, $filter) {
     $scope.timerRunning = false;
     $scope.pomodoro = 25;
     $scope.shortBreak = 5;
     $scope.longBreak = 20;
     $scope.currentSession = 'pomodoro';
-    $scope.pomodorosPerSet = 4;
     $scope.pomodoroNumber = 1;
     $scope.time = $scope[$scope.currentSession] * 60000;
-    $scope.timePercent = 0;
     var sessionTypes = ['pomodoro', 'shortBreak', 'longBreak'];
+    var setArray = [];
+    var pomodorosPerSet = 4;
     var sessionIndex = 0;
+
+    //Define a set of 4 pomodoros with 3 short breaks and 1 long break in between
+    for (var i = 1; i <= pomodorosPerSet; i++) {
+      setArray.push('pomodoro');
+      setArray.push(i === pomodorosPerSet ? 'longBreak' : 'shortBreak');
+    };
 
     $scope.$watch('time', function() {
       if ($scope.time <= 0 && $scope.timerRunning) {
@@ -28,14 +34,6 @@ angular
       }
     });
 
-    $scope.$watch('pomodorosPerSet', function(newValue) {
-      $scope.setArray = [];
-      for (var i = 1; i <= $scope.pomodorosPerSet; i++) {
-        $scope.setArray.push('pomodoro');
-        $scope.setArray.push(i === $scope.pomodorosPerSet ? 'longBreak' : 'shortBreak');
-      };
-    });
-
     $scope.highlight = function($event) {
       $event.currentTarget.select();
     }
@@ -43,10 +41,11 @@ angular
     $scope.startTimer = function() {
       if (!$scope.timerRunning) {
         $scope.timer = $interval(function(){
-          $scope.time -= 200;
-          updateTimerProgress();
-        }, 200);
+          $scope.time -= 1000;
+          updateProgressBar();
+        }, 1000);
         $scope.timerRunning = true;
+        document.title = 'Session: ' + $filter('titlecase')($scope.currentSession);
       }
     }
 
@@ -54,26 +53,28 @@ angular
       if ($scope.timerRunning) {
         $interval.cancel($scope.timer);
         $scope.timerRunning = false;
+        document.title = 'Pomodoro Timer';
       }
       if (reset) {
         resetTime();
       }
-      updateTimerProgress();
     }
 
     $scope.nextSession = function() {
-      sessionIndex < $scope.setArray.length - 1 ? sessionIndex++ : sessionIndex = 0;
+      sessionIndex < setArray.length - 1 ? sessionIndex++ : sessionIndex = 0;
       updateCurrentSession();
     }
 
     $scope.previousSession = function() {
-      sessionIndex > 0 ? sessionIndex-- : sessionIndex = $scope.setArray.length - 1;
+      sessionIndex > 0 ? sessionIndex-- : sessionIndex = setArray.length - 1;
       updateCurrentSession();
     }
 
     function updateCurrentSession() {
       $scope.pomodoroNumber = Math.floor((sessionIndex + 2) / 2);
-      $scope.currentSession = $scope.setArray[sessionIndex];
+      $scope.currentSession = setArray[sessionIndex];
+      document.title = 'Session: ' + $filter('titlecase')($scope.currentSession);
+      updateProgressBar();
       resetTime();
     }
 
@@ -85,10 +86,10 @@ angular
       $scope.time = $scope[$scope.currentSession] * 60000;
     }
 
-    function updateTimerProgress() {
-      var progress =  document.getElementById('timerProgress');
+    function updateProgressBar() {
+      var progressBar =  document.getElementById('progressBar');
       var percent = $scope.time / ($scope[$scope.currentSession] * 60000);
-      var progressLength = Math.floor(percent * 252);
-      progress.style.strokeDashoffset = progressLength + 'px';
+      var barLength = Math.floor(percent * 566);
+      progressBar.style.strokeDashoffset = barLength + 'px';
     }
   }]);
