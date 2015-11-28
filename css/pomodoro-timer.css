@@ -15,6 +15,12 @@ body {
   padding: 5px;
 }
 
+h1 {
+  background-color: #55AA33;
+  color: #000;
+  margin: 0 0 10px 0;
+}
+
 input {
   text-align: center;
   font-weight: inherit;
@@ -80,21 +86,27 @@ button:focus {
 }
 
 svg {
-  width: 88px;
-  height: 88px;
+  width: 200px;
+  height: 200px;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
 #timerDisplay {
   fill: #55EE33;
+  font-size: 32px;
   text-anchor: middle;
 }
 
-#timerProgress {
+#timerCircle {
+  stroke: #55AA33;
+  stroke-width: 4px;
+}
+
+#progressBar {
   stroke: #55EE33;
-  stroke-width: 8;
-  stroke-dasharray: 252px;
-  stroke-dashoffset: 252px;
+  stroke-width: 20px;
+  stroke-dasharray: 566px;
+  stroke-dashoffset: 566px;
 }
 

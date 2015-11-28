@@ -11,6 +11,7 @@
   </head>
   <body ng-app="pomodoro-timer">
     <div id="appContainer" ng-controller="TimerController">
+      <h1>Pomodoro Timer</h1>
       <form name="controls" novalidate>
         <fieldset>
           <legend>Pomodoro</legend>
@@ -32,8 +33,9 @@
       
       <div>
         <svg>
-          <circle id="timerProgress" cx="44" cy="44" r="40" transform="rotate(-90 44 44)"/>
-          <text id="timerDisplay" x="44" y="48" ng-bind="time | date:'m:ss'"></text>
+          <circle id="progressBar" cx="100" cy="100" r="90" transform="rotate(-90 100 100)"/>
+          <circle id="timerCircle" cx="100" cy="100" r="78"/>
+          <text id="timerDisplay" x="100" y="110" ng-bind="time | date:'m:ss'"></text>
         </svg>
       </div>
 
